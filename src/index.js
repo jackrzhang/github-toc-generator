@@ -2,9 +2,16 @@
 
 import program from 'commander';
 import request from 'superagent';
+import opn from 'opn';
 import chalk from 'chalk';
 
 import pkg from './../package.json';
+
+function parseTOC(readMeText, depth) {
+  console.log(readMeText);
+
+  process.exit(0);
+}
 
 function handleError(err, res) {
   let errorMessage;
@@ -17,21 +24,24 @@ function handleError(err, res) {
   }
 
   console.error(chalk.red(errorMessage));
+  process.exit(1);
 }
 
-function generateReadMeToc(user, repository) {
-  const url = `https://raw.githubusercontent.com/${user}/${repository}/master/README.md`;
-
+function generateReadMeTOC(user, repository) {
   request
-    .get(url)
+    .get(`https://raw.githubusercontent.com/${user}/${repository}/master/README.md`)
     .set('Accept', 'text/plain')
     .end((err, res) => {
       if (res && res.ok) {
-        console.log(res.text);
-        process.exit(0);
+        if (program.open) {
+          opn(`https://github.com/${user}/${repository}/blob/master/README.md`);
+          process.exit(0);
+        }
+
+        const depth = program.depth ? Number(program.depth) : 6;
+        parseTOC(res.text, depth);
       } else {
         handleError(err, res);
-        process.exit(1);
       }
     });
 }
@@ -50,5 +60,5 @@ if (program.args.length !== 2) {
   const user = program.args[0];
   const repository = program.args[1];
 
-  generateReadMeToc(user, repository);
+  generateReadMeTOC(user, repository);
 }
