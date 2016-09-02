@@ -28,8 +28,8 @@ function parseHeaders(readMeText) {
 
       // Identify headers using the '#' character
       if (/^#{1,6}.+$/.test(lines[i])) {
-        const headerDepth = lines[i].lastIndexOf('#', 5);
-        const headerText = lines[i].substring(headerDepth + 1);
+        const headerDepth = lines[i].lastIndexOf('#', 5) + 1;
+        const headerText = lines[i].substring(headerDepth);
 
         headers.push({ depth: headerDepth, text: headerText });
       }
@@ -41,7 +41,7 @@ function parseHeaders(readMeText) {
 
 function processHeaders(headers, depth) {
   const processedHeaders = [];
-  const uniqueAnchors = {};
+  const usedAnchors = {};
 
   /*
     Algorithm for creating anchors:
@@ -58,11 +58,11 @@ function processHeaders(headers, depth) {
       .replace(/[^\w\s-]/g, '')
       .replace(/\s/g, '-');
 
-    if (uniqueAnchors[anchor]) {
-      uniqueAnchors[anchor] = 1;
+    if (usedAnchors[anchor]) {
+      anchor = `${anchor}-${usedAnchors[anchor]}`;
+      usedAnchors[anchor]++;
     } else {
-      anchor = `${anchor}-${uniqueAnchors[anchor]}`;
-      uniqueAnchors[anchor]++;
+      usedAnchors[anchor] = 1;
     }
 
     return anchor;
@@ -79,6 +79,18 @@ function processHeaders(headers, depth) {
   }
 
   return processedHeaders;
+}
+
+function createTOC(headers) {
+  let TOC = '';
+
+  for (let i = 0; i < headers.length; i++) {
+    TOC = TOC.concat(
+      `${' '.repeat((headers[i].depth * 2) - 1)}* [${headers[i].text}](#${headers[i].anchor})\n`
+    );
+  }
+
+  return TOC;
 }
 
 function handleError(err, res) {
@@ -110,6 +122,9 @@ function generateReadMeTOC(user, repository) {
 
         const depth = program.depth ? Number(program.depth) : 6;
         headers = processHeaders(headers, depth);
+
+        const TOC = createTOC(headers);
+        console.log(chalk.blue(TOC));
 
         process.exit(0);
       } else {
