@@ -8,7 +8,21 @@ import chalk from 'chalk';
 import pkg from './../package.json';
 
 function parseTOC(readMeText, depth) {
-  console.log(readMeText);
+  const lines = readMeText.split('\n');
+  let isCodeBlock = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    // toggle whether or not text is within a code block
+    if (lines[i].includes('```')) isCodeBlock = !isCodeBlock;
+
+    if (!isCodeBlock) {
+      if (i !== lines.length - 1) {
+        
+      }
+    }
+  }
+
+  console.log(lines);
 
   process.exit(0);
 }
