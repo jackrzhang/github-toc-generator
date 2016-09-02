@@ -7,24 +7,36 @@ import chalk from 'chalk';
 
 import pkg from './../package.json';
 
-function parseTOC(readMeText, depth) {
+function parseHeaders(readMeText, depth) {
+  const headers = [];
   const lines = readMeText.split('\n');
   let isCodeBlock = false;
 
   for (let i = 0; i < lines.length; i++) {
-    // toggle whether or not text is within a code block
+    // Toggle whether or not text is within a code block
     if (lines[i].includes('```')) isCodeBlock = !isCodeBlock;
 
     if (!isCodeBlock) {
+      // Identify alternate H1 & H2 headers using underline-based styles
       if (i !== lines.length - 1) {
-        
+        if (/^=+$/.test(lines[i + 1])) {
+          headers.push({ depth: 1, text: lines[i] });
+        } else if (/^-+$/.test(lines[i + 1])) {
+          headers.push({ depth: 2, text: lines[i] });
+        }
+      }
+
+      // Identify headers using the '#' character
+      if (/^#{1,6}.+$/.test(lines[i])) {
+        const headerDepth = lines[i].lastIndexOf('#', 5);
+        const headerText = lines[i].substring(headerDepth + 1);
+
+        console.log(headerDepth, headerText);
       }
     }
   }
 
-  console.log(lines);
-
-  process.exit(0);
+  return headers;
 }
 
 function handleError(err, res) {
@@ -53,7 +65,9 @@ function generateReadMeTOC(user, repository) {
         }
 
         const depth = program.depth ? Number(program.depth) : 6;
-        parseTOC(res.text, depth);
+        const headers = parseHeaders(res.text, depth);
+
+        process.exit(0);
       } else {
         handleError(err, res);
       }
