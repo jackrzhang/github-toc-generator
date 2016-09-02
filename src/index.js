@@ -7,7 +7,7 @@ import chalk from 'chalk';
 
 import pkg from './../package.json';
 
-function parseHeaders(readMeText, depth) {
+function parseHeaders(readMeText) {
   const headers = [];
   const lines = readMeText.split('\n');
   let isCodeBlock = false;
@@ -31,12 +31,54 @@ function parseHeaders(readMeText, depth) {
         const headerDepth = lines[i].lastIndexOf('#', 5);
         const headerText = lines[i].substring(headerDepth + 1);
 
-        console.log(headerDepth, headerText);
+        headers.push({ depth: headerDepth, text: headerText });
       }
     }
   }
 
   return headers;
+}
+
+function processHeaders(headers, depth) {
+  const processedHeaders = [];
+  const uniqueAnchors = {};
+
+  /*
+    Algorithm for creating anchors:
+    1. Strip whitespace from both ends
+    2. Lowercase
+    3. Remove any character that is not a letter, number, space, or hyphen
+    4. Change any space to a hyphen
+    5. If anchor is not unique within the document, concat '-1', '-2', etc.
+  */
+  const createAnchor = text => {
+    let anchor = text
+      .trim()
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s/g, '-');
+
+    if (uniqueAnchors[anchor]) {
+      uniqueAnchors[anchor] = 1;
+    } else {
+      anchor = `${anchor}-${uniqueAnchors[anchor]}`;
+      uniqueAnchors[anchor]++;
+    }
+
+    return anchor;
+  };
+
+  for (let i = 0; i < headers.length; i++) {
+    if (headers[i].depth <= depth) {
+      processedHeaders.push({
+        depth: headers[i].depth,
+        text: headers[i].text.trim(),
+        anchor: createAnchor(headers[i].text)
+      });
+    }
+  }
+
+  return processedHeaders;
 }
 
 function handleError(err, res) {
@@ -64,8 +106,10 @@ function generateReadMeTOC(user, repository) {
           process.exit(0);
         }
 
+        let headers = parseHeaders(res.text);
+
         const depth = program.depth ? Number(program.depth) : 6;
-        const headers = parseHeaders(res.text, depth);
+        headers = processHeaders(headers, depth);
 
         process.exit(0);
       } else {
