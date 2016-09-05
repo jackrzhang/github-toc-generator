@@ -7,7 +7,7 @@ import chalk from 'chalk';
 
 import pkg from './../package.json';
 
-function parseHeaders(readMeText) {
+export function parseHeaders(readMeText) {
   const headers = [];
   const lines = readMeText.split('\n');
   let isCodeBlock = false;
@@ -44,7 +44,7 @@ function parseHeaders(readMeText) {
   return headers;
 }
 
-function processHeaders(headers, depth) {
+export function processHeaders(headers, depth) {
   const processedHeaders = [];
   const usedAnchors = {};
 
@@ -86,7 +86,7 @@ function processHeaders(headers, depth) {
   return processedHeaders;
 }
 
-function createTOC(headers) {
+export function createTOC(headers) {
   let TOC = '';
 
   for (let i = 0; i < headers.length; i++) {
@@ -112,7 +112,7 @@ function handleError(err, res) {
   process.exit(1);
 }
 
-function generateReadMeTOC(user, repository) {
+export function generateReadMeTOC(user, repository) {
   request
     .get(`https://raw.githubusercontent.com/${user}/${repository}/master/README.md`)
     .set('Accept', 'text/plain')
