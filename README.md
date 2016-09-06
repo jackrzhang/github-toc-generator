@@ -1,35 +1,41 @@
-#node-cli-app-boilerplate
-[![dependencies Status](https://david-dm.org/jackrzhang/node-cli-app-boilerplate/status.svg)](https://david-dm.org/jackrzhang/node-cli-app-boilerplate)
-[![devDependencies Status](https://david-dm.org/jackrzhang/node-cli-app-boilerplate/dev-status.svg)](https://david-dm.org/jackrzhang/node-cli-app-boilerplate?type=dev)
+#github-toc-generator
+[![npm](https://img.shields.io/npm/v/github-toc-generator.svg)](https://www.npmjs.com/package/github-toc-generator)
+[![Build Status](https://travis-ci.org/jackrzhang/github-toc-generator.svg?branch=master)](https://travis-ci.org/jackrzhang/github-toc-generator)
+[![dependencies Status](https://david-dm.org/jackrzhang/github-toc-generator/status.svg)](https://david-dm.org/jackrzhang/github-toc-generator)
 
-A simple setup for writing and publishing command-line applications using Node.js.
+A command-line utility for generating Tables of Contents for Github markdown files.
 
-##Setup
-* [Commander]()
-* [Chalk]()
-* [Babel](https://babeljs.io), with a [babel-cli](https://babeljs.io/docs/usage/cli/) build step
-* [ESLint](http://eslint.org/), using [Airbnb's base configuration](https://github.com/airbnb/javascript)
+###Usage
+By default, the a maximum header depth of 6 is utilized.
+```
+ghtoc [options] <user> <repository>
 
-##Usage
+Options:
+
+  -h, --help            output usage information
+  -V, --version         output the version number
+  -d, --depth <number>  specifiy the maximum header depth (1 - 6) of the toc
+  -o, --open            open the readme in browser
+```
+
 ###Installation
 ```sh
-git clone https://github.com/jackrzhang/node-cli-app-boilerplate.git
-cd node-cli-app-boilerplate
-rm -rf .git
-git init
-npm install
+$ npm install -g github-toc-generator
 ```
 
-###Testing your command-line program
-Both `npm link` and `npm install -g` will build and symlink the script to a location on your path.
+##Contributing
+Issues and pull requests are welcome.
 ```sh
-npm link
+$ git clone https://github.com/jackrzhang/github-toc-generator
+$ cd github-toc-generator
+$ npm install -g
 ```
 
-###Linting
+**Please run linting and tests prior to commits.**
 ```sh
-npm run lint
+$ npm run lint
+$ npm test
 ```
 
 ##License
-[MIT](https://github.com/jackrzhang/node-cli-app-boilerplate/blob/master/LICENSE)
+[MIT](https://github.com/jackrzhang/github-toc-generator/blob/master/LICENSE)

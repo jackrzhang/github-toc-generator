@@ -112,7 +112,7 @@ function handleError(err, res) {
   process.exit(1);
 }
 
-export function generateReadMeTOC(user, repository) {
+function generateReadMeTOC(user, repository) {
   request
     .get(`https://raw.githubusercontent.com/${user}/${repository}/master/README.md`)
     .set('Accept', 'text/plain')
