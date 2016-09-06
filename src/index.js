@@ -64,8 +64,8 @@ export function processHeaders(headers, depth) {
       .replace(/\s/g, '-');
 
     if (usedAnchors[anchor]) {
-      anchor = `${anchor}-${usedAnchors[anchor]}`;
       usedAnchors[anchor]++;
+      anchor = `${anchor}-${usedAnchors[anchor]}`;
     } else {
       usedAnchors[anchor] = 1;
     }
