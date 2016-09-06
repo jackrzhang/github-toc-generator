@@ -1,10 +1,18 @@
 {
   "name": "github-toc-generator",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Jack R. Zhang <15jzhang@gmail.com> (http://jackrzhang.com)",
   "license": "MIT",
-  "description": "",
-  "keywords": [],
+  "description": "Generate Tables of Contents for Github READMEs.",
+  "keywords": [
+    "github",
+    "toc",
+    "table of contents",
+    "md",
+    "markdown",
+    "readme",
+    "command-line"
+  ],
   "main": "src/index.js",
   "preferGlobal": true,
   "engines": {
