@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/jackrzhang/github-toc-generator.svg?branch=master)](https://travis-ci.org/jackrzhang/github-toc-generator)
 [![dependencies Status](https://david-dm.org/jackrzhang/github-toc-generator/status.svg)](https://david-dm.org/jackrzhang/github-toc-generator)
 
-A command-line utility for generating Tables of Contents for Github markdown files.
+A command-line utility for generating Tables of Contents for Github markdown files. All links are Github-compatible anchors.
 
 ###Usage
 By default, the a maximum header depth of 6 is utilized.
