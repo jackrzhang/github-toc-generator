@@ -56,7 +56,7 @@ export function processHeaders(headers, depth) {
     4. Change any space to a hyphen
     5. If anchor is not unique within the document, concat '-1', '-2', etc.
   */
-  const createAnchor = text => {
+  const createAnchor = (text) => {
     let anchor = text
       .trim()
       .toLowerCase()
