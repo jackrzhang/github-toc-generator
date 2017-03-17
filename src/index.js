@@ -14,8 +14,8 @@ export function parseHeaders(readMeText) {
 
   for (let i = 0; i < lines.length; i++) {
     // Extract contents of markdown links
-    if (/\[([^\]]+)\][^\)]+\)/g.test(lines[i])) {
-      lines[i] = lines[i].replace(/\[([^\]]+)\][^\)]+\)/g, '$1');
+    if (/\[([^\]]+)\][^)]+\)/g.test(lines[i])) {
+      lines[i] = lines[i].replace(/\[([^\]]+)\][^)]+\)/g, '$1');
     }
 
     // Toggle whether or not text is within a code block
