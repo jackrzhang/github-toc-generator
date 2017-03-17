@@ -101,7 +101,7 @@ export function createTOC(headers) {
 function handleError(err, res) {
   let errorMessage;
   if (res && res.status === 404) {
-    errorMessage = '404: README for the specified repository not found.';
+    errorMessage = '404: Markdown file for the specified repository not found.';
   } else if (err) {
     errorMessage = err;
   } else {
@@ -112,14 +112,14 @@ function handleError(err, res) {
   process.exit(1);
 }
 
-function generateReadMeTOC(user, repository) {
+function generateReadMeTOC(user, repository, file) {
   request
-    .get(`https://raw.githubusercontent.com/${user}/${repository}/master/README.md`)
+    .get(`https://raw.githubusercontent.com/${user}/${repository}/master/${file}`)
     .set('Accept', 'text/plain')
     .end((err, res) => {
       if (res && res.ok) {
         if (program.open) {
-          opn(`https://github.com/${user}/${repository}/blob/master/README.md`);
+          opn(`https://github.com/${user}/${repository}/blob/master/${file}`);
           process.exit(0);
         }
 
@@ -140,17 +140,18 @@ function generateReadMeTOC(user, repository) {
 
 program
   .version(pkg.version)
-  .usage('[options] <user> <repository>')
+  .usage('[options] <user> <repository> <file>')
   .description('A command-line utility that generates Tables of Contents for Github READMEs.')
   .option('-d, --depth <number>', 'specifiy the maximum header depth (1 - 6) of the toc')
   .option('-o, --open', 'open the readme in browser')
   .parse(process.argv);
 
-if (program.args.length !== 2) {
+if (program.args.length !== 2 && program.args.length !== 3) {
   program.help();
 } else {
   const user = program.args[0];
   const repository = program.args[1];
+  const file = program.args[2] ? program.args[2] : 'README.md';
 
-  generateReadMeTOC(user, repository);
+  generateReadMeTOC(user, repository, file);
 }
