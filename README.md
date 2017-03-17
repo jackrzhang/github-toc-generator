@@ -1,11 +1,11 @@
-#github-toc-generator
+# github-toc-generator
 [![npm](https://img.shields.io/npm/v/github-toc-generator.svg)](https://www.npmjs.com/package/github-toc-generator)
 [![Build Status](https://travis-ci.org/jackrzhang/github-toc-generator.svg?branch=master)](https://travis-ci.org/jackrzhang/github-toc-generator)
 [![dependencies Status](https://david-dm.org/jackrzhang/github-toc-generator/status.svg)](https://david-dm.org/jackrzhang/github-toc-generator)
 
 A command-line utility for generating Tables of Contents for Github markdown files. All links are Github-compatible anchors.
 
-###Usage
+### Usage
 By default, the a maximum header depth of 6 is utilized.
 ```
 ghtoc [options] <user> <repository>
@@ -18,12 +18,12 @@ Options:
   -o, --open            open the readme in browser
 ```
 
-###Installation
+### Installation
 ```sh
 $ npm install -g github-toc-generator
 ```
 
-##Contributing
+## Contributing
 Issues and pull requests are welcome.
 ```sh
 $ git clone https://github.com/jackrzhang/github-toc-generator
@@ -37,5 +37,5 @@ $ npm run lint
 $ npm test
 ```
 
-##License
+## License
 [MIT](https://github.com/jackrzhang/github-toc-generator/blob/master/LICENSE)
