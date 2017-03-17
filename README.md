@@ -6,9 +6,9 @@
 A command-line utility for generating Tables of Contents for Github markdown files. All links are Github-compatible anchors.
 
 ### Usage
-By default, the a maximum header depth of 6 is utilized.
+By default, a maximum header depth of 6 and the file `README.md` is utilized.
 ```
-ghtoc [options] <user> <repository>
+ghtoc [options] <user> <repository> <file>
 
 Options:
 
