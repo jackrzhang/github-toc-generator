@@ -1,6 +1,7 @@
 # github-toc-generator
 [![Build Status](https://travis-ci.org/jackrzhang/github-toc-generator.svg?branch=master)](https://travis-ci.org/jackrzhang/github-toc-generator)
 [![npm](https://img.shields.io/npm/v/github-toc-generator.svg)](https://www.npmjs.com/package/github-toc-generator)
+![npm](https://img.shields.io/npm/dt/github-toc-generator.svg)
 
 A command-line utility for generating Tables of Contents for Github markdown files. All links are Github-compatible anchors.
 
